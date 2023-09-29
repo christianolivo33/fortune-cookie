@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            animation: changeBackgroundColor 1s infinite alternate;
+        }
+
+        @keyframes changeBackgroundColor {
+            0% {
+                background-color: #e67e22;
+            }
+            100% {
+                background-color: #3498db;
+            }
+        }
+
+        #cookie-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        #cookie {
+            width: 50vw;
+            height: 50vw;
+            background-color: #e67e22;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+            position: relative;
+        }
+
+        #cookie img {
+            width: 40%;
+            height: 40%;
+            transition: opacity 0.3s ease-in-out;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        #cookie img::after {
+            content: "Click Me I'm Lucky!";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            opacity: 0;
+            pointer-events: none; /* Ensures that the tooltip does not interfere with clicks */
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        #cookie img:hover::after {
+            opacity: 1;
+        }
+
+        #message {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            font-size: 48px;
+        }
+    </style>
+</head>
+<body>
+    <div id="cookie-container">
+        <div id="cookie">
+            <img src="images/fortune-cookie.jpg" alt="Fortune Cookie">
+        </div>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        const cookie = document.getElementById('cookie');
+        const cookieImage = document.querySelector('#cookie img');
+        const message = document.getElementById('message');
+        const fortunes = [
+            "You will have a great day!",
+            "A pleasant surprise is waiting for you.",
+            "Good things come to those who wait.",
+            "Your hard work will pay off soon.",
+            "Happiness is on its way to you.",
+            "Adventure awaits!",
+            "A new opportunity will arise.",
+            "The perfect day is right around the corner",
+            "Fight for what you believe in!",
+            "Be patient today it might pay off",
+            "God is on your side",
+            "Keep working your hardest"
+        ];
+
+        cookie.addEventListener('click', () => {
+            // Rotate the cookie for added effect
+            cookie.style.transform = 'rotate(180deg)';
+            cookieImage.style.opacity = 0; // Hide the image
+            setTimeout(() => {
+                // Display a random fortune
+                const randomIndex = Math.floor(Math.random() * fortunes.length);
+                message.textContent = fortunes[randomIndex];
+                message.style.display = 'block';
+
+                // Revert the cookie to its original state and hide the message
+                setTimeout(() => {
+                    cookie.style.transform = 'rotate(0deg)';
+                    cookieImage.style.opacity = 1; // Show the image again
+                    message.style.display = 'none';
+                }, 3000); // Hide message after 3 seconds
+            }, 500);
+        });
+    </script>
+</body>
+</html>
